@@ -5,18 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script type="text/javascript" src="paper-full.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.1.1/howler.js"></script>
     <link rel="stylesheet" type="text/css" href="circles.css">
     <script type="text/paperscript" canvas="myCanvas">
+
+        var keyData = {
+            a: {
+                color: "purple",
+                sound: new Howl({
+                    src: ['sounds/boom.wav']
+                })
+            },
+            s: {
+                color: "green",
+                sound: new Howl({
+                    src: ['sounds/clap.wav']
+                })
+            },
+            d: {
+                color: "teal",
+                sound: new Howl({
+                    src: ['sounds/hihat.wav']
+                })
+            },
+            f: {
+                color: "blue",
+                sound: new Howl({
+                    src: ['sounds/kick.wav']
+                })
+            },
+            g: {
+                color: "red",
+                sound: new Howl({
+                    src: ['sounds/openhat.wav']
+                })
+            },
+            h: {
+                color: "yellow",
+                sound: new Howl({
+                    src: ['sounds/ride.wav']
+                })
+            },
+            j: {
+                color: "pink",
+                sound: new Howl({
+                    src: ['sounds/snare.wav']
+                })
+            },
+            k: {
+                color: "orange",
+                sound: new Howl({
+                    src: ['sounds/tink.wav']
+                })
+            },
+            l: {
+                color: "magenta",
+                sound: new Howl({
+                    src: ['sounds/tom.wav']
+                })
+            }
+        }
 
         var circles = [];
 
         function onKeyDown(event) {
-            var maxPoint = new Point(view.size.width, view.size.height);
-            var randomPoint = Point.random();
-            var point = maxPoint * randomPoint;
-            var newCircle = new Path.Circle(point, 500);
-            newCircle.fillColor = "red";
-            circles.push(newCircle);
+            if(keyData[event.key]){
+                var maxPoint = new Point(view.size.width, view.size.height);
+                var randomPoint = Point.random();
+                var point = maxPoint * randomPoint;
+                var newCircle = new Path.Circle(point, 500);
+                newCircle.fillColor = keyData[event.key].color;
+                keyData[event.key].sound.play();
+
+                circles.push(newCircle);
+            }
         }
 
         function onFrame(event) {
